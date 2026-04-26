@@ -361,17 +361,19 @@ save("fig2b_cell_counts.pdf")
 # ============================================================================
 
 metrics_c = ["total_counts", "n_genes_by_counts",
-             "pct_counts_mt", "log10_genes_per_umi"]
+             "pct_counts_mt", "pct_counts_ribo",
+             "pct_counts_hb", "log10_genes_per_umi"]
 titles_c  = ["UMI counts (log)", "Genes per cell (log)",
-             "% mitochondrial", "Complexity"]
-logy = [True, True, False, False]
+             "% mitochondrial", "% ribosomal",
+             "% hemoglobin", "Complexity"]
+logy = [True, True, False, False, False, False]
 
 present_sev = [s for s in SEVERITY_ORDER
                if s in adata.obs["Severity"].cat.categories
                and (adata.obs["Severity"] == s).any()]
 pal_present = {s: SEVERITY_PAL[s] for s in present_sev}
 
-fig, axes = plt.subplots(1, 4, figsize=(20, 5.5))
+fig, axes = plt.subplots(1, 6, figsize=(28, 5.5))
 
 for ax, metric, title, is_log in zip(axes, metrics_c, titles_c, logy):
     data_per_group = [
